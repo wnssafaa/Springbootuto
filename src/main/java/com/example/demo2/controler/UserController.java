@@ -3,6 +3,7 @@ package com.example.demo2.controler;
 import com.example.demo2.domain.student;
 import com.example.demo2.service.studentService;
 import com.example.demo2.shared.studentDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class UserController {
     private final studentService studentService;
-
+  //  @Autowired
     public UserController(studentService studentService) {
         this.studentService = studentService;
     }

@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface studentRepo extends JpaRepository<student, Long> {
+public interface studentRepo extends JpaRepository<student, Long>
+//LONG CUS ID ET DE TYPE LONG
+{
 
     Optional<student> findByName(@Param("name") String name);
    // List<student> findByRole(String role);

@@ -3,11 +3,13 @@ package com.example.demo2.service;
 import com.example.demo2.domain.student;
 import com.example.demo2.shared.studentDTO;
 import com.example.demo2.studentRepo;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
+//@Component
 @Service
 public class studentService implements studentServiceImp{
     private final studentRepo repository;
@@ -22,6 +24,8 @@ public class studentService implements studentServiceImp{
         student newStudent = new student();
         newStudent.setName(s.getName());
         newStudent.setRole(s.getRole());
+        newStudent.setDob(s.getDob());
+        newStudent.setAge(s.getAge());
         repository.save(newStudent);
         return "Student created successfully!";
     }
@@ -64,20 +68,23 @@ public class studentService implements studentServiceImp{
 
     @Override
     public String deleteStudent(long id) {
-        if(repository.existsById(id)){
+        boolean exsit=repository.existsById(id);
+        if(exsit){
             repository.deleteById(id);
             return "student suprimer avec succes";
         }else
-                 return "student exsit pas";
+              throw new IllegalStateException("student with this id " +id+"  not exsit");
     }
 
     @Override
+    //@Transactional
     public String updateStudent(studentDTO s) {
         Optional<student> existingStudent = repository.findById(s.getId());
         if (existingStudent.isPresent()) {
             student updatedStudent = existingStudent.get();
             updatedStudent.setName(s.getName());
             updatedStudent.setRole(s.getRole());
+            updatedStudent.setDob(s.getDob());
             repository.save(updatedStudent);
             return "Student updated successfully!";
         } else {
